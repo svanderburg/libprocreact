@@ -1,0 +1,4 @@
+line 0: [This]
+line 1: [is]
+line 2: [a]
+line 3: [test]

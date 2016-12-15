@@ -1,0 +1,7 @@
+line 0: [This]
+line 1: [is]
+line 2: [a]
+line 3: [test]
+line 4: [without]
+line 5: [trailing]
+line 6: [linefeed]
