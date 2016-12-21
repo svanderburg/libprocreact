@@ -9,7 +9,7 @@ static pid_t true_async(void)
     
     if(pid == 0)
     {
-        char *args[] = { "true", NULL };
+        char *const args[] = { "true", NULL };
         execvp(args[0], args);
         _exit(1);
     }
@@ -23,7 +23,7 @@ static pid_t false_async(void)
     
     if(pid == 0)
     {
-        char *args[] = { "false", NULL };
+        char *const args[] = { "false", NULL };
         execvp(args[0], args);
         _exit(1);
     }

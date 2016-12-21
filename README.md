@@ -17,8 +17,21 @@ This library encapsulates the patterns Disnix uses to accomplish the above
 properties. The resulting function interfaces are inspired by reactive
 programming patterns and look somewhat similar.
 
+Installation
+============
+Installation of Dysnomia is very straight forward by running the standard
+Autotools build procedure:
+
+    $ ./configure
+    $ make
+    $ make install
+
+Usage
+=====
+This library offers abstractions that can be used in a variety of scenarios.
+
 Writing a primitive function
-============================
+----------------------------
 Take the following trivial function as an example that simply displays the text
 `Hello!` on the standard output:
 
@@ -104,7 +117,7 @@ a custom retrieval function. See section: 'Intrerpreting exit statuses' for more
 information.
 
 Writing a function providing arbitrary output (complex functions)
-=================================================================
+-----------------------------------------------------------------
 The previously shown abstractions work well for functions returning a byte,
 boolean, or void-functions. However, it may also be desirable to implement
 asynchronous functions returning more complex data, such as strings or an array
@@ -188,7 +201,7 @@ Furthermore, you can also compose your own types. See section: 'Composing custom
 types' for more information.
 
 Synchronously executing a collection of primitive functions
-===========================================================
+-----------------------------------------------------------
 In addition to asynchronous functions returning single values, we may also want
 to work with collections of asynchronous function invocations. For example, we
 may want to invoke the following function multiple times, preferably in parallel
@@ -201,7 +214,7 @@ pid_t true_async(void)
     
     if(pid == 0)
     {
-        char *args[] = { "true", NULL };
+        char *const args[] = { "true", NULL };
         execvp(args[0], args);
         _exit(1);
     }
@@ -511,8 +524,13 @@ resources when the work is done:
 procreact_destroy_future_iterator(&iterator);
 ```
 
-Intrerpreting exit statuses
-===========================
+Advanced features
+=================
+In addition to the scenarios described in the previous sections, this library
+also offers a number of advanced features.
+
+Interpreting exit statuses
+--------------------------
 As described earlier, there are various retrieval functions that can be used to
 determine the outcome of a function depending on its exit status. Currently this
 library supports the following functions:
@@ -543,7 +561,7 @@ int procreact_wait_for_boolean(pid_t pid, ProcReact_Status *status)
 ```
 
 Composing custom types
-======================
+----------------------
 As explained earlier, when retrieving the results of complex functions, a pipe
 gets constructed from which data is being read. The data is converted into a
 data structure of choice, such as:

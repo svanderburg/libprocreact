@@ -7,7 +7,7 @@ static ProcReact_Future cat_text_file_async(char *filename)
     
     if(future.pid == 0)
     {
-        char *args[] = { "cat", filename, NULL };
+        char *const args[] = { "cat", filename, NULL };
         dup2(future.fd, 1);
         execvp(args[0], args);
         _exit(1);
