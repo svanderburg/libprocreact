@@ -19,7 +19,7 @@ programming patterns and look somewhat similar.
 
 Installation
 ============
-Installation of Dysnomia is very straight forward by running the standard
+Installation of `libprocreact` is very straight forward by running the standard
 Autotools build procedure:
 
     $ ./configure
