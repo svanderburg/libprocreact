@@ -12,6 +12,7 @@ AM_PROG_CC_C_O
 # Output
 AC_CONFIG_FILES([
 Makefile
+src/libprocreact.pc
 src/Makefile
 src/libprocreact/Makefile
 tests/Makefile
