@@ -87,9 +87,9 @@ int exit_status = procreact_wait_for_exit_status(pid, &status);
 
 /* Check the result */
 if(status != PROCREACT_STATUS_OK)
-    printf("The process terminated abnormally!\n");
+    fprintf(stderr, "The process terminated abnormally!\n");
 else if(exit_status != 0)
-    printf("The process failed!\n");
+    fprintf(stderr, "The process failed!\n");
 ```
 
 In the above code fragment, the `procreact_wait_for_exit_status()` invocation
@@ -120,8 +120,8 @@ Writing a function providing arbitrary output (complex functions)
 -----------------------------------------------------------------
 The previously shown abstractions work well for functions returning a byte,
 boolean, or void-functions. However, it may also be desirable to implement
-asynchronous functions returning more complex data, such as strings or an array
-of strings. For example:
+asynchronous functions returning more complex data, such as strings or arrays of
+strings. For example:
 
 ```C
 #include <stdlib.h>
@@ -174,7 +174,7 @@ char *result = procreact_future_get(&future, &status);
 if(status == PROCREACT_STATUS_OK && result != NULL)
     printf("%s\n", result);
 else
-    printf("Some error occured!\n");
+    fprintf(stderr, "Some error occured!\n");
 ```
 
 When the return value is no longer needed, we must free it:
@@ -350,7 +350,8 @@ ProcReact_FutureIterator iterator = procreact_initialize_future_iterator(has_nex
 ```
 
 The above function invocation: `procreact_initialize_future_iterator()`
-configures an `ProcReact_PidIterator` struct. It takes the following parameters:
+configures an `ProcReact_FutureIterator` struct. It takes the following
+parameters:
 
 * A pointer to a function that indicates whether there is a next element in the
   collection
@@ -440,7 +441,7 @@ Asynchronously executing a collection of primitive functions
 ------------------------------------------------------------
 The previous two collection examples are executed *synchronously*. This means
 that while the execution of each function that retrieves an element is done
-asychronously, the overall iteration blocks the parent process until it
+asynchronously, the overall iteration task blocks the parent process until it
 completes, which is not always desirable.
 
 A possible solution to make iterations asynchronous is to fork another
@@ -472,7 +473,7 @@ processes invoking primitive functions provided by an iterator.
 if(procreact_spawn_next_pid(&iterator))
     printf("Spawned a process and we have more of them!\n");
 else
-    printf("All process have been spawned\n");
+    printf("All processes have been spawned\n");
 ```
 
 We can integrate invocations to `procreact_complete_all_finished_processes()`
@@ -489,7 +490,7 @@ while(TRUE)
 
 Asynchronously executing a collection of complex functions
 ----------------------------------------------------------
-Similar to primitive functions, we can also asychronously process future
+Similar to primitive functions, we can also asynchronously process future
 iterators:
 
 ```C
@@ -505,7 +506,7 @@ chunks of the read-end of the pipe:
 ```C
 while(TRUE)
 {
-    int running_processes = procreact_buffer(&iterator);
+    unsigned int running_processes = procreact_buffer(&iterator);
     
     if(running_processes == 0)
     {
