@@ -7,5 +7,5 @@ Name: libprocreact
 Version: @VERSION@
 Description: Procreact library
 Requires:
-Libs: -L${libdir}
+Libs: -L${libdir} -lprocreact
 Cflags: -I${includedir}

@@ -19,7 +19,7 @@ static ProcReact_Future cat_text_file_async(char *filename)
 static char **cat_text_file_sync(char *filename, ProcReact_Status *status)
 {
     ProcReact_Future future = cat_text_file_async(filename);
-    return procreact_future_get(&future, status);
+    return (char**)procreact_future_get(&future, status);
 }
 
 int main(int argc, char *argv[])

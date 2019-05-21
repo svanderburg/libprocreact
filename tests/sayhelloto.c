@@ -19,7 +19,7 @@ static ProcReact_Future say_hello_to_async(const char *name)
 static char *say_hello_to_sync(const char *name, ProcReact_Status *status)
 {
     ProcReact_Future future = say_hello_to_async(name);
-    return procreact_future_get(&future, status);
+    return (char*)procreact_future_get(&future, status);
 }
 
 int main(int argc, char *argv[])

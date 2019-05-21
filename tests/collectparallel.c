@@ -9,13 +9,13 @@
 static ProcReact_Future return_count_async(unsigned int count)
 {
     ProcReact_Future future = procreact_initialize_future(procreact_create_string_type());
-    
+
     if(future.pid == 0)
     {
         dprintf(future.fd, "%u", count);
         _exit(0);
     }
-    
+
     return future;
 }
 
@@ -46,11 +46,11 @@ static ProcReact_Future next_count_process(void *data)
 static void complete_count_process(void *data, ProcReact_Future *future, ProcReact_Status status)
 {
     IteratorData *iterator_data = (IteratorData*)data;
-    
+
     if(status == PROCREACT_STATUS_OK && future->result != NULL)
     {
         iterator_data->results = (char**)realloc(iterator_data->results, (iterator_data->results_length + 1) * sizeof(char*));
-        iterator_data->results[iterator_data->results_length] = future->result;
+        iterator_data->results[iterator_data->results_length] = (char*)future->result;
         iterator_data->results_length++;
     }
     else
@@ -97,7 +97,7 @@ int main(int argc, char *argv[])
         {
             /* Sort the results array to get a deterministic result */
             qsort(data.results, data.results_length, sizeof(char*), compare_strings);
-            
+
             /* Check if the result matches what we expect */
             if(strcmp(data.results[0], "1") != 0 ||
               strcmp(data.results[1], "2") != 0 ||
@@ -117,9 +117,9 @@ int main(int argc, char *argv[])
         fprintf(stderr, "A failure has occured!\n");
         exit_status = 1;
     }
-    
+
     free_string_array(data.results, data.results_length);
     procreact_destroy_future_iterator(&iterator);
-    
+
     return exit_status;
 }

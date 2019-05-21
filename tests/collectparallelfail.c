@@ -50,7 +50,7 @@ static void complete_count_process(void *data, ProcReact_Future *future, ProcRea
     if(status == PROCREACT_STATUS_OK && future->result != NULL)
     {
         iterator_data->results = (char**)realloc(iterator_data->results, (iterator_data->results_length + 1) * sizeof(char*));
-        iterator_data->results[iterator_data->results_length] = future->result;
+        iterator_data->results[iterator_data->results_length] = (char*)future->result;
         iterator_data->results_length++;
     }
     else

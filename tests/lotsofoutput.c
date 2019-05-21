@@ -27,7 +27,7 @@ static ProcReact_Future return_alphabet_async(void)
 static char *return_alphabet_sync(ProcReact_Status *status)
 {
     ProcReact_Future future = return_alphabet_async();
-    return procreact_future_get(&future, status);
+    return (char*)procreact_future_get(&future, status);
 }
 
 int main(int argc, char *argv[])
