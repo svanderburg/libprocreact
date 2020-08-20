@@ -6,7 +6,7 @@
 
 let
   pkgs = import nixpkgs {};
-  
+
   jobs = rec {
     tarball =
       with pkgs;
@@ -18,7 +18,7 @@ let
         inherit officialRelease;
         CFLAGS = "-Wall -std=gnu90";
         buildInputs = [ doxygen ];
-        
+
         preDist = ''
           make -C src apidox
           mkdir -p $out/share/doc/libprocreact
