@@ -10,7 +10,7 @@ typedef struct
 {
     unsigned int index;
     unsigned int amount;
-    int success;
+    ProcReact_bool success;
     char **results;
     unsigned int results_length;
 }
@@ -19,13 +19,13 @@ IteratorData;
 static ProcReact_Future return_count_async(unsigned int count)
 {
     ProcReact_Future future = procreact_initialize_future(procreact_create_string_type());
-    
+
     if(future.pid == 0)
     {
         dprintf(future.fd, "%u", count);
         _exit(0);
     }
-    
+
     return future;
 }
 
@@ -46,7 +46,7 @@ static ProcReact_Future next_count_process(void *data)
 static void complete_count_process(void *data, ProcReact_Future *future, ProcReact_Status status)
 {
     IteratorData *iterator_data = (IteratorData*)data;
-    
+
     if(status == PROCREACT_STATUS_OK && future->result != NULL)
     {
         iterator_data->results = (char**)realloc(iterator_data->results, (iterator_data->results_length + 1) * sizeof(char*));
@@ -61,7 +61,7 @@ static int compare_strings(const void *a, const void *b)
 {
     const char *l = *((char**)a);
     const char *r = *((char**)b);
-    
+
     return strcmp(l, r);
 }
 
@@ -70,10 +70,10 @@ static void free_string_array(char **arr, unsigned int arr_length)
     if(arr != NULL)
     {
         unsigned int i;
-        
+
         for(i = 0; i < arr_length; i++)
             free(arr[i]);
-            
+
         free(arr);
     }
 }
@@ -83,13 +83,13 @@ int main(int argc, char *argv[])
     int exit_status;
     IteratorData data = { 0, 5, TRUE, NULL, 0 };
     ProcReact_FutureIterator iterator = procreact_initialize_future_iterator(has_next_count, next_count_process, complete_count_process, &data);
-    
+
     /* Spawn processes in parallel */
     while(procreact_spawn_next_future(&iterator));
-    
+
     /* Main loop that terminates after all processes complete */
     while(procreact_buffer(&iterator) > 0);
-    
+
     if(data.success)
     {
         if(data.results_length != 5)
@@ -101,7 +101,7 @@ int main(int argc, char *argv[])
         {
             /* Sort the results array to get a deterministic result */
             qsort(data.results, data.results_length, sizeof(char*), compare_strings);
-            
+
             /* Check if the result matches what we expect */
             if(strcmp(data.results[0], "1") != 0 ||
               strcmp(data.results[1], "2") != 0 ||
@@ -121,9 +121,9 @@ int main(int argc, char *argv[])
         fprintf(stderr, "A failure has occured!\n");
         exit_status = 1;
     }
-    
+
     free_string_array(data.results, data.results_length);
     procreact_destroy_future_iterator(&iterator);
-    
+
     return exit_status;
 }

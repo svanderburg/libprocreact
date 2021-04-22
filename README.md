@@ -22,9 +22,25 @@ Installation
 Installation of `libprocreact` is very straight forward by running the standard
 Autotools build procedure:
 
-    $ ./configure
-    $ make
-    $ make install
+```bash
+$ ./configure
+$ make
+$ make install
+```
+
+When building from the Git repository, you should run the bootstrap script
+first:
+
+```bash
+$ ./bootstrap
+```
+
+It is also possible to build the project including all dependencies with Nix
+for a desired system architecture:
+
+```bash
+$ nix-build release.nix -A build.x86_64-linux
+```
 
 Usage
 =====
@@ -52,13 +68,13 @@ we can also split and extend the above function into an asynchronous variant:
 pid_t print_hello_async(void)
 {
     pid_t pid = fork();
-    
+
     if(pid == 0)
     {
         printf("Hello!\n");
         _exit(0);
     }
-    
+
     return pid;
 }
 ```
@@ -148,13 +164,13 @@ process, set up a pipe, and let the child process construct the greeting:
 ProcReact_Future say_hello_to_async(const char *name)
 {
     ProcReact_Future future = procreact_initialize_future(procreact_create_string_type());
-    
+
     if(future.pid == 0)
     {
         dprintf(future.fd, "Hello %s!", name);
         _exit(0);
     }
-    
+
     return future;
 }
 ```
@@ -211,14 +227,14 @@ with other function invocations, to provide improved performance:
 pid_t true_async(void)
 {
     pid_t pid = fork();
-    
+
     if(pid == 0)
     {
         char *const args[] = { "true", NULL };
         execvp(args[0], args);
         _exit(1);
     }
-    
+
     return pid;
 }
 ```
@@ -259,7 +275,7 @@ typedef struct
 {
     unsigned int index;
     unsigned int length;
-    int success;
+    ProcReact_bool success;
 }
 IteratorData;
 
@@ -296,7 +312,7 @@ invocation:
 static void complete_true_process(void *data, pid_t pid, ProcReact_Status status, int result)
 {
     IteratorData *iterator_data = (IteratorData*)data;
-    
+
     if(status != PROCREACT_STATUS_OK || !result)
         iterator_data->success = FALSE;
 }
@@ -328,13 +344,13 @@ collection of complex asynchronous functions, that for example, return strings:
 ProcReact_Future return_count_async(unsigned int count)
 {
     ProcReact_Future future = procreact_initialize_future(procreact_create_string_type());
-    
+
     if(future.pid == 0)
     {
         dprintf(future.fd, "%u", count);
         _exit(0);
     }
-    
+
     return future;
 }
 ```
@@ -368,7 +384,7 @@ typedef struct
 {
     unsigned int index;
     unsigned int amount;
-    int success;
+    ProcReact_bool success;
     char **results;
     unsigned int results_length;
 }
@@ -404,7 +420,7 @@ results:
 static void complete_count_process(void *data, ProcReact_Future *future, ProcReact_Status status)
 {
     IteratorData *iterator_data = (IteratorData*)data;
-    
+
     if(status == PROCREACT_STATUS_OK && future->result != NULL)
     {
         iterator_data->results = (char**)realloc(iterator_data->results, (iterator_data->results_length + 1) * sizeof(char*));
@@ -483,7 +499,7 @@ to retrieve the results of completed processes in a main loop:
 while(TRUE)
 {
     /* Do other stuff in the main loop */
-    
+
     procreact_complete_all_finished_processes(&iterator);
 }
 ```
@@ -507,13 +523,13 @@ chunks of the read-end of the pipe:
 while(TRUE)
 {
     unsigned int running_processes = procreact_buffer(&iterator);
-    
+
     if(running_processes == 0)
     {
         /* This indicates that there are no running processes anymore */
         /* You could do something with the end result here */
     }
-    
+
     /* Do other stuff in the main loop */
 }
 ```

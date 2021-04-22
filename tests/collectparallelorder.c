@@ -10,7 +10,7 @@ typedef struct
 {
     unsigned int index;
     unsigned int amount;
-    int success;
+    ProcReact_bool success;
     char **results;
     unsigned int results_length;
 }
