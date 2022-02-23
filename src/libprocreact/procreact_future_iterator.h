@@ -19,6 +19,13 @@
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
+/**
+ * @file
+ * @brief Future iterator module
+ * @defgroup FutureIterator
+ * @{
+ */
+
 #ifndef __PROCREACT_FUTURE_ITERATOR_H
 #define __PROCREACT_FUTURE_ITERATOR_H
 #include "procreact_pid.h"
@@ -34,6 +41,7 @@ typedef ProcReact_Future (*ProcReact_FutureIteratorNext) (void *data);
 /** Pointer to a function that gets executed when a processes finishes */
 typedef void (*ProcReact_FutureIteratorComplete) (void *data, ProcReact_Future *future, ProcReact_Status status);
 
+/** Typedef alias for struct with the same name */
 typedef struct ProcReact_FutureIterator ProcReact_FutureIterator;
 
 /**
@@ -138,3 +146,7 @@ void procreact_fork_buffer_and_wait_in_parallel_limit(ProcReact_FutureIterator *
 #endif
 
 #endif
+
+/**
+ * @}
+ */

@@ -19,6 +19,13 @@
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
+/**
+ * @file
+ * @brief Future module
+ * @defgroup Future
+ * @{
+ */
+
 #ifndef __PROCREACT_FUTURE_H
 #define __PROCREACT_FUTURE_H
 #include <unistd.h>
@@ -76,3 +83,7 @@ void *procreact_future_get(ProcReact_Future *future, ProcReact_Status *status);
 #endif
 
 #endif
+
+/**
+ * @}
+ */

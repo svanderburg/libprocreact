@@ -20,7 +20,7 @@ let
         buildInputs = [ doxygen ];
 
         preDist = ''
-          make -C src apidox
+          make apidox
           mkdir -p $out/share/doc/libprocreact
           cp -av apidox $out/share/doc/libprocreact
           echo "doc api $out/share/doc/libprocreact/apidox/html" >> $out/nix-support/hydra-build-products

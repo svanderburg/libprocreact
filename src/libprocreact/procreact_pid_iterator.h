@@ -19,6 +19,13 @@
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
+/**
+ * @file
+ * @brief PID iterator module
+ * @defgroup PIDIterator
+ * @{
+ */
+
 #ifndef __PROCREACT_PID_ITERATOR_H
 #define __PROCREACT_PID_ITERATOR_H
 #include "procreact_pid.h"
@@ -33,6 +40,7 @@ typedef pid_t (*ProcReact_PidIteratorNext) (void *data);
 /** Pointer to a function that gets executed when a processes finishes */
 typedef void (*ProcReact_PidIteratorComplete) (void *data, pid_t pid, ProcReact_Status, int result);
 
+/** Typedef that points to a struct with the same name */
 typedef struct ProcReact_PidIterator ProcReact_PidIterator;
 
 /**
@@ -130,3 +138,7 @@ void procreact_fork_in_parallel_and_wait(ProcReact_PidIterator *iterator);
 void procreact_fork_and_wait_in_parallel_limit(ProcReact_PidIterator *iterator, const unsigned int limit);
 
 #endif
+
+/**
+ * @}
+ */

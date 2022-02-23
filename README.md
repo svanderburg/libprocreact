@@ -7,7 +7,7 @@ primary use-case is to facilitate process orchestration in
 
 Disnix is a tool that automatically deploys service-oriented systems from
 declarative specifications. Each deployment activity is carried out by a
-different (child)process, for the following reasons:
+different (child) process, for the following reasons:
 
 * Some of these processes may have to run in parallel to improve the tool's
   performance
@@ -287,7 +287,7 @@ collection of invocations to the asynchronous function invoking the `true`
 process:
 
 ```C
-static int has_next_true_process(void *data)
+static ProcReact_bool has_next_true_process(void *data)
 {
     IteratorData *iterator_data = (IteratorData*)data;
     return iterator_data->index < iterator_data->length;
@@ -397,7 +397,7 @@ We can use the following functions to make the iteration possible over a
 collection of invocations to `return_acount_async()`:
 
 ```C
-static int has_next_count_process(void *data)
+static ProcReact_bool has_next_count_process(void *data)
 {
     IteratorData *iterator_data = (IteratorData*)data;
     return iterator_data->index < iterator_data->amount;

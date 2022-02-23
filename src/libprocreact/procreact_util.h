@@ -19,9 +19,23 @@
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
+/**
+ * @file
+ * @brief ProcReact utility module
+ * @defgroup Util
+ * @{
+ */
+
 #ifndef __PROCREACT_UTIL_H
 #define __PROCREACT_UTIL_H
 
+/**
+ * Typedef for a boolean to improve code readability
+ */
 typedef int ProcReact_bool;
 
 #endif
+
+/**
+ * @}
+ */

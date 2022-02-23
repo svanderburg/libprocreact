@@ -19,6 +19,13 @@
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
+/**
+ * @file
+ * @brief ProcReact types module
+ * @defgroup Types
+ * @{
+ */
+
 #ifndef __PROCREACT_TYPES_H
 #define __PROCREACT_TYPES_H
 
@@ -139,3 +146,7 @@ void procreact_free_string_array(char **arr);
 #endif
 
 #endif
+
+/**
+ * @}
+ */

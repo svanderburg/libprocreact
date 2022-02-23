@@ -19,6 +19,13 @@
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
+/**
+ * @file
+ * @brief Signal utility module
+ * @defgroup Signal
+ * @{
+ */
+
 #ifndef __PROCREACT_SIGNAL_H
 #define __PROCREACT_SIGNAL_H
 #include "procreact_pid_iterator.h"
@@ -48,3 +55,7 @@ void procreact_complete_all_finished_processes(ProcReact_PidIterator *iterator);
 #endif
 
 #endif
+
+/**
+ * @}
+ */
